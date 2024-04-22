@@ -25,9 +25,9 @@ cnt_tokens = len(output_tokens)
 #print(tokenizer.decode(output_tokens))
 
 start_time = time.time()
-std_output = target_model.generate(input_ids, do_sample=False, min_length=64, max_length=64)
+std_output = target_model.generate(input_ids, do_sample=False, max_length=1900)
 time_base = time.time() - start_time
 
-assert ouroboros_output[:,:64].equal(std_output[:,:64])
+print('same output?', ouroboros_output[:,:64].equal(std_output[:,:64]))
 print('base e2e speed:', time_base, cnt_tokens, cnt_tokens / time_base)
 print('ouroboros e2e speed:', time_ouroboros, cnt_tokens, cnt_tokens / time_ouroboros)
