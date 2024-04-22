@@ -7,7 +7,7 @@ setup(
     install_requires=[
         "numpy>=1.21.0",
         "tqdm",
-        "transformers>=4.36.0",
+        "transformers==4.36.0",
         "datasets>=1.6.2",
         "human_eval",
         "lade",

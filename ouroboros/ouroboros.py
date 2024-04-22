@@ -7,8 +7,8 @@ from ouroboros.cache_engine import CacheEngine
 
 
 @torch.no_grad()
-def ouroboros(prefix : torch.Tensor, approx_model : torch.nn.Module, target_model : torch.nn.Module, ngram_cache : CacheEngine = None,
-                         max_len : int = 512 , gamma : int = 4, window_size = 20, guess_set_size = 20, lookahead_level = 7, eos_token_id = 2, topk = 3) -> torch.Tensor:
+def ouroboros(prefix : torch.Tensor, approx_model : torch.nn.Module, target_model : torch.nn.Module,
+    tokenizer, ngram_cache : CacheEngine = None, max_len : int = 512 , gamma : int = 4, window_size = 20, guess_set_size = 20, lookahead_level = 7, eos_token_id = 2, topk = 3) -> torch.Tensor:
     """
     Performs ouroboros with an approximate model and a target model to generate a sequence of tokens.
 
@@ -65,8 +65,6 @@ def ouroboros(prefix : torch.Tensor, approx_model : torch.nn.Module, target_mode
         gen_len = out_len - prefix_len
         
         n = prefix_len + gen_len - 1
-
-        # print(prefix)
         
 
         for i in range(gen_len):
@@ -149,8 +147,9 @@ def ouroboros(prefix : torch.Tensor, approx_model : torch.nn.Module, target_mode
                 target_model_cache.rollback(n+1)
         if end_pos is not None:
             break
-        
 
+        print(tokenizer.decode(prefix[0, seq_len:]), end=' ', flush=True)
+        seq_len = prefix.shape[-1]
 
     if end_pos is not None:
         prefix = prefix[:, :end_pos]

@@ -40,7 +40,8 @@ class KVCacheModelLade():
     
     @torch.no_grad()
     def rollback(self, end_pos : int):
-        for i in range(32):
+        n_model_layers = self._model.config.num_hidden_layers
+        for i in range(n_model_layers):
             k = self.ctx['past_key_values'][i][0][:,:,:end_pos,:]
             v = self.ctx['past_key_values'][i][1][:,:,:end_pos,:]
             self.ctx['past_key_values'][i] = (k, v)
