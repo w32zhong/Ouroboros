@@ -5,9 +5,12 @@ setup(
     version='0.1.0',
     packages=find_packages(),
     install_requires=[
+        "torch==2.2.2",
         "numpy>=1.21.0",
         "tqdm",
         "transformers==4.36.0",
+        "accelerate",
+        "bitsandbytes",
         "datasets>=1.6.2",
         "human_eval",
         "lade",
